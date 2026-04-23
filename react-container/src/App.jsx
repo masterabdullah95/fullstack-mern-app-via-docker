@@ -5,6 +5,7 @@ function App() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    console.log(import.meta.env.VITE_API_URL);
     fetch(`${import.meta.env.VITE_API_URL}`)
       .then((res) => res.json())
       .then((data) => setMessage(data.msg));
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <section id="center">
+        <h2>This is test</h2>
         <h2>{message}</h2>
       </section>
     </>
