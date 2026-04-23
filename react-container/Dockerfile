@@ -3,6 +3,11 @@ FROM oven/bun:1 AS build
 
 WORKDIR /app
 
+# Declare build argument
+ARG VITE_API_URL
+# Make it available to Vite during build
+ENV VITE_API_URL=$VITE_API_URL
+
 COPY package*.json bun.lock ./
 
 RUN bun install 
