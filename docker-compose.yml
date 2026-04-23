@@ -1,17 +1,21 @@
-version: "3.9"
-
 services:
   server:
     build: ./express-container
     container_name: express-container
     ports:
       - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydocker
     networks:
       - fullstack-net
+    depends_on:
+      - mongo
     restart: unless-stopped
   client: 
     build: ./react-container
     container_name: react-container
+    args:
+      - VITE_API_URL=${VITE_API_URL}   # ✅ reads from .env file
     ports:
       - "5173:5173"
     networks:
@@ -19,6 +23,16 @@ services:
     depends_on:
       - server
     restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db   # data persists even if container restarts
 networks:
   fullstack-net:
     driver: bridge
+
+volumes:
+  mongo_data:
