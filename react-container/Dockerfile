@@ -19,6 +19,6 @@ WORKDIR /app
 
 COPY --from=build /app/dist ./dist
 
-EXPOSE 3000
+EXPOSE 5173
 
-CMD ["bunx", "serve", "-s", "dist", "-l", "3000"]
+CMD ["bunx", "serve", "-s", "dist", "-l", "5173"]
